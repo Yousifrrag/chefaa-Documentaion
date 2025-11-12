@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chefaa — Odoo 17 Customizations Status</title>
+    <meta name="description" content="Chefaa project status report for Odoo 17 customizations — professional handover document with links, screenshots, and acceptance criteria." />
+    <style>
+      :root {
+        --bg: #0b1020;
+        --card: rgba(255,255,255,0.06);
+        --border: rgba(255,255,255,0.12);
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --accent: #22d3ee; /* cyan */
+        --accent2: #34d399; /* green */
+        --accent3: #60a5fa; /* blue */
+        --warning: #f59e0b;
+        --danger: #ef4444;
+        --success: #10b981;
+      }
+      html, body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: radial-gradient(1200px 600px at 10% -10%, #1f2937 10%, #0b1020 60%),
+                    radial-gradient(1400px 800px at 90% 110%, #0ea5e9 0%, #0b1020 60%);
+        font-family: ui-sans-serif, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        line-height: 1.55;
+      }
+      .hero {
+        position: relative;
+        padding: 48px 24px 24px;
+        text-align: center;
+      }
+      .title {
+        font-size: 32px;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .subtitle {
+        margin-top: 8px;
+        color: var(--muted);
+        font-size: 16px;
+      }
+      .actions {
+        margin-top: 18px;
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      .btn {
+        appearance: none;
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.2));
+        padding: 10px 14px;
+        border-radius: 12px;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.2s ease;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+        border-color: rgba(255,255,255,0.24);
+      }
+      .btn-accent { border-color: rgba(34,211,238,0.5); color: #061e24; background: linear-gradient(180deg, #22d3ee, #0891b2); }
+      .btn-outline { background: transparent; }
+
+      .toc {
+        position: sticky;
+        top: 0;
+        backdrop-filter: saturate(1.2) blur(6px);
+        background: rgba(11,16,32,0.65);
+        border-bottom: 1px solid var(--border);
+        z-index: 10;
+      }
+      .toc ul { list-style: none; margin: 0; padding: 8px 18px; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+      .toc a { color: var(--text); text-decoration: none; padding: 6px 10px; border-radius: 10px; border: 1px solid var(--border); }
+      .toc a:hover { border-color: rgba(255,255,255,0.24); }
+
+      .container { max-width: 1120px; margin: 0 auto; padding: 24px; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 18px; }
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        background: var(--card);
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+      }
+      .card h3 { margin: 4px 0 8px; font-size: 18px; }
+      .meta { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 8px; }
+      .badge { padding: 4px 10px; border-radius: 999px; font-size: 12px; border: 1px solid var(--border); }
+      .badge.delivered { color: #062019; border-color: rgba(16,185,129,0.5); background: linear-gradient(180deg, #34d399, #059669); }
+      .badge.analysis { color: #18110a; border-color: rgba(245,158,11,0.5); background: linear-gradient(180deg, #f59e0b, #d97706); }
+      .badge.planned { color: #0f1a2a; border-color: rgba(96,165,250,0.5); background: linear-gradient(180deg, #60a5fa, #2563eb); }
+      .badge.production { color: #062019; border-color: rgba(16,185,129,0.5); background: linear-gradient(180deg, #10b981, #059669); }
+      .badge.needs { color: #1b1206; border-color: rgba(245,158,11,0.6); background: linear-gradient(180deg, #fbbf24, #f59e0b); }
+      .badge.blocked { color: #220808; border-color: rgba(239,68,68,0.6); background: linear-gradient(180deg, #ef4444, #b91c1c); }
+      .tag { font-size: 12px; color: var(--muted); border: 1px dashed var(--border); padding: 3px 8px; border-radius: 999px; }
+      .img-wrap { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 8px; background: rgba(255,255,255,0.02); }
+      .img-wrap img { width: 100%; height: 180px; object-fit: cover; display: block; }
+      .card .links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+      .card .links a { text-decoration: none; }
+      .list { margin: 8px 0 0; padding-left: 18px; color: var(--muted); }
+      .footer { color: var(--muted); text-align: center; margin: 24px 0 48px; }
+
+      .section-title { margin: 24px 0 12px; font-size: 20px; }
+
+      .kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; background: rgba(255,255,255,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 2px 6px; }
+
+      @media print {
+        .toc, .actions { display: none; }
+        body { background: #fff; color: #111827; }
+        .card { break-inside: avoid; background: #fff; border-color: #e5e7eb; }
+        .badge { border: none; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="hero">
+      <div class="title">Chefaa — Odoo 17 Customizations Status</div>
+      <div class="subtitle">Prepared by Yousif Frrag • Updated: 12 Nov 2025</div>
+      <div class="actions">
+        <button class="btn" onclick="window.print()">Print / Export PDF</button>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <ul>
+        <li><a href="#production">Live in Production</a></li>
+        <li><a href="#delivered">Delivered on Test</a></li>
+        <li><a href="#analysis">Analysis / Design</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <h2 id="delivered" class="section-title">Delivered on Test (Pending UAT & Production)</h2>
+      <div class="grid">
+        <!-- 10) Barcode in PR & PO Lines -->
+        <section class="card" id="barcode-pr-po-lines">
+          <div class="meta">
+            <span class="badge delivered">Delivered on Test</span>
+            <span class="tag">Modules: Purchase</span>
+          </div>
+          <h3>Barcode in PR & PO Lines</h3>
+          <p class="muted">Barcode field visible, searchable and exportable on Purchase Request/Order lines.</p>
+          <ul class="list">
+            <li>Matches product barcode; supports search and export.</li>
+            <li>Visible on PR and PO line forms and list views.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/Barcode in PR & PO Lines.png" alt="Barcode in PR & PO Lines screenshot" /></div>
+          
+        </section>
+
+        <!-- 11) Sales Report Sorted A→Z -->
+        <section class="card" id="sales-report-sorted">
+          <div class="meta">
+            <span class="badge delivered">Delivered on Test</span>
+            <span class="tag">Modules: Sales / Reporting</span>
+          </div>
+          <h3>Sales Report Sorted A → Z</h3>
+          <ul class="list">
+            <li>Default alphabetical sort applied (ascending).</li>
+            <li>Persists between sessions for users.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/Sales Report Sorted A → Z.png" alt="Sales Report Sorted A → Z screenshot" /></div>
+          
+        </section>
+
+        <!-- 12) Return Title in Sales Report -->
+        <section class="card" id="return-title">
+          <div class="meta">
+            <span class="badge blocked">Blocked</span>
+            <span class="tag">Modules: Sales / Reporting</span>
+          </div>
+          <h3>Return Title in Sales Report</h3>
+          <ul class="list">
+            <li>Cannot test; unexpected error occurs when attempting the return label.</li>
+            <li>Requires fix before UAT; see screenshots for reproduction.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/what i click before triggirng the unexected error.png" alt="Step before triggering unexpected error" /></div>
+          <div class="img-wrap"><img src="images/unexpected error .png" alt="Unexpected error message" /></div>
+          
+        </section>
+
+        
+
+        <!-- 14) Categorize Sales Report -->
+        <section class="card" id="categorize-sales-report">
+          <div class="meta">
+            <span class="badge needs">Needs Review</span>
+            <span class="tag">Modules: Sales / Products / Reporting</span>
+          </div>
+          <h3>Categorize Sales Report (Pharma vs Non‑Pharma)</h3>
+          <ul class="list">
+            <li>Requires internal meeting with Ahmed Atef to locate implementation.</li>
+            <li>Not reachable currently in Sales reports; needs investigation.</li>
+          </ul>
+          
+          
+        </section>
+      </div>
+
+      <h2 id="analysis" class="section-title">Analysis / Design</h2>
+      <div class="grid">
+        <!-- 15) Item Location for Each Drug -->
+        <section class="card" id="item-location-each-drug">
+          <div class="meta">
+            <span class="badge blocked">Blocked</span>
+            <span class="tag">Modules: Accounting / Inventory</span>
+          </div>
+          <h3>Item Location for Each Drug</h3>
+          <p class="muted">Blocked — cannot reach the reference Google Sheet to implement filters; will proceed once access is restored.</p>
+          <ul class="list">
+            <li>Approach remains Accounting saved filters to avoid heavy customization.</li>
+            <li>Waiting on sheet access to finalize filters and views.</li>
+          </ul>
+          
+          
+        </section>
+      </div>
+
+      <h2 id="production" class="section-title">Live in Production</h2>
+      <div class="grid">
+        <!-- 1) Access Rights -->
+        <section class="card" id="access-rights">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Inventory / Purchase / Sales / Accounting</span>
+          </div>
+          <h3>Access Rights</h3>
+          <ul class="list">
+            <li>Define role matrices; secure menu and action access.</li>
+            <li>Document group permissions aligned with customer policy.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/access Rights.png" alt="Access Rights matrix screenshot" /></div>
+          <div class="links">
+            <a class="btn btn-accent" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1y1ANu-JbUqh_OtmcvX7NONlxUcFzcIDK/edit?pli=1&gid=948850737#gid=948850737">Access Rights Sheet</a>
+          </div>
+        </section>
+
+        <!-- 2) Master Sheet Export -->
+        <section class="card" id="master-sheet-export">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Purchase / Pricing</span>
+          </div>
+          <h3>Master Sheet Export</h3>
+          <ul class="list">
+            <li>Export items from vendor price lists using highest discount.</li>
+            <li>Use commercial price if stock exists per rule.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/Master Sheet Export.png" alt="Master Sheet Export screenshot" /></div>
+          
+        </section>
+
+        <!-- 3) Available Quantity and Value -->
+        <section class="card" id="available-quantity-value">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Sales / Inventory</span>
+          </div>
+          <h3>Available Quantity and Value</h3>
+          <ul class="list">
+            <li>SO line shows available quantity after PO receipts.</li>
+            <li>Initial value displayed for available products.</li>
+          </ul>
+          
+          
+        </section>
+
+        <!-- 4) Cost -->
+        <section class="card" id="cost">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Inventory / Purchase</span>
+          </div>
+          <h3>Cost</h3>
+          <ul class="list">
+            <li>We need the cost of each item currently available in our warehouse.</li>
+            <li>The cost of each item is how much we paid for it in the purchase order.</li>
+          </ul>
+          
+          
+        </section>
+
+        <!-- 5) Reports -->
+        <section class="card" id="reports">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Reporting</span>
+          </div>
+          <h3>Reports</h3>
+          <ul class="list">
+            <li>Build reports exactly per Google Sheets specification as They Asked</li>
+            <li>Reports requested from Business — Google Sheets. Missing the link of the sheets</li>
+          </ul>
+          
+          
+        </section>
+
+        <!-- 6) Discount -->
+        <section class="card" id="discount-import">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Sales</span>
+          </div>
+          <h3>SO Import — Auto Update Prices</h3>
+          <ul class="list">
+            <li>Prices update automatically after importing sales order lines.</li>
+            <li>Validation ensures updated prices meet business rules; changes logged.</li>
+          </ul>
+          
+          
+        </section>
+
+        <!-- 7) Select All in the Return -->
+        <section class="card" id="select-all-return">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Inventory / Returns</span>
+          </div>
+          <h3>Select All in the Return</h3>
+          <ul class="list">
+            <li>One action selects all applicable lines in the return wizard.</li>
+            <li>Supports removal/return with bulk efficiency.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/Select All in the Return.png" alt="Select All in the Return screenshot" /></div>
+          
+        </section>
+
+        <!-- 8) PO Import -->
+        <section class="card" id="po-import">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Purchase</span>
+          </div>
+          <h3>PO Import</h3>
+          <ul class="list">
+            <li>Import POs from Excel similar to SO import.</li>
+            <li>Validate vendor, lines, taxes before creation.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/PO Import.png" alt="PO Import screenshot" /></div>
+          
+        </section>
+
+        <!-- 9) PO Line Count -->
+        <section class="card" id="po-line-count">
+          <div class="meta">
+            <span class="badge production">Live in Production</span>
+            <span class="tag">Modules: Purchase</span>
+          </div>
+          <h3>PO Line Count</h3>
+          <ul class="list">
+            <li>Counter updates with line add/remove on PO.</li>
+            <li>Visible on PO form header.</li>
+          </ul>
+          <div class="img-wrap"><img src="images/PO Line Count.png" alt="PO Line Count screenshot" /></div>
+          
+        </section>
+      </div>
+
+      
+    </div>
+
+    <!-- No JS required; print handled inline -->
+  </body>
+</html>
