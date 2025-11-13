@@ -107,6 +107,7 @@
       .badge.production { color: #062019; border-color: rgba(16,185,129,0.5); background: linear-gradient(180deg, #10b981, #059669); }
       .badge.needs { color: #1b1206; border-color: rgba(245,158,11,0.6); background: linear-gradient(180deg, #fbbf24, #f59e0b); }
       .badge.blocked { color: #220808; border-color: rgba(239,68,68,0.6); background: linear-gradient(180deg, #ef4444, #b91c1c); }
+      .badge.asap { color: #061e24; border-color: rgba(34,211,238,0.5); background: linear-gradient(180deg, #22d3ee, #0891b2); }
       .tag { font-size: 12px; color: var(--muted); border: 1px dashed var(--border); padding: 3px 8px; border-radius: 999px; }
       .img-wrap { border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-top: 8px; background: rgba(255,255,255,0.02); }
       .img-wrap img { width: 100%; height: 180px; object-fit: cover; display: block; }
@@ -181,16 +182,15 @@
         <!-- 12) Return Title in Sales Report -->
         <section class="card" id="return-title">
           <div class="meta">
-            <span class="badge blocked">Blocked</span>
+            <span class="badge delivered">Delivered on Test</span>
             <span class="tag">Modules: Sales / Reporting</span>
           </div>
           <h3>Return Title in Sales Report</h3>
           <ul class="list">
-            <li>Cannot test; unexpected error occurs when attempting the return label.</li>
-            <li>Requires fix before UAT; see screenshots for reproduction.</li>
+            <li>Implemented and ready for UAT; shows RETURN label correctly.</li>
+            <li>Verified on test environment with sample report.</li>
           </ul>
-          <div class="img-wrap"><img src="images/what i click before triggirng the unexected error.png" alt="Step before triggering unexpected error" /></div>
-          <div class="img-wrap"><img src="images/unexpected error .png" alt="Unexpected error message" /></div>
+          <div class="img-wrap"><img src="images/Return Title in Sales Report.png" alt="Return Title in Sales Report" /></div>
           
         </section>
 
@@ -199,14 +199,15 @@
         <!-- 14) Categorize Sales Report -->
         <section class="card" id="categorize-sales-report">
           <div class="meta">
-            <span class="badge needs">Needs Review</span>
+            <span class="badge delivered">Delivered on Test</span>
             <span class="tag">Modules: Sales / Products / Reporting</span>
           </div>
           <h3>Categorize Sales Report (Pharma vs Non‑Pharma)</h3>
           <ul class="list">
-            <li>Requires internal meeting with Ahmed Atef to locate implementation.</li>
-            <li>Not reachable currently in Sales reports; needs investigation.</li>
+            <li>Implemented default categories for Pharma vs Non‑Pharma.</li>
+            <li>Validated on test; ready for UAT.</li>
           </ul>
+          <div class="img-wrap"><img src="images/Categorize Sales Report (Pharma vs Non‑Pharma).png" alt="Categorize Sales Report screenshot" /></div>
           
           
         </section>
@@ -217,14 +218,14 @@
         <!-- 15) Item Location for Each Drug -->
         <section class="card" id="item-location-each-drug">
           <div class="meta">
-            <span class="badge blocked">Blocked</span>
+            <span class="badge asap">Working on it ASAP</span>
             <span class="tag">Modules: Accounting / Inventory</span>
           </div>
           <h3>Item Location for Each Drug</h3>
-          <p class="muted">Blocked — cannot reach the reference Google Sheet to implement filters; will proceed once access is restored.</p>
+          <p class="muted">Proceeding now via Accounting saved filters with minimal customization. Sheet reference optional.</p>
           <ul class="list">
             <li>Approach remains Accounting saved filters to avoid heavy customization.</li>
-            <li>Waiting on sheet access to finalize filters and views.</li>
+            <li>Working on it ASAP; filters and views being finalized.</li>
           </ul>
           
           
@@ -276,6 +277,7 @@
             <li>SO line shows available quantity after PO receipts.</li>
             <li>Initial value displayed for available products.</li>
           </ul>
+          <div class="img-wrap"><img src="images/Available Quantity and Value.png" alt="Available Quantity and Value screenshot" /></div>
           
           
         </section>
@@ -293,6 +295,8 @@
           </ul>
           
           
+          
+          
         </section>
 
         <!-- 5) Reports -->
@@ -304,8 +308,11 @@
           <h3>Reports</h3>
           <ul class="list">
             <li>Build reports exactly per Google Sheets specification as They Asked</li>
-            <li>Reports requested from Business — Google Sheets. Missing the link of the sheets</li>
+            <li>Reports requested from Business — Google Sheets. Link provided below.</li>
           </ul>
+          <div class="links">
+            <a class="btn btn-accent" target="_blank" rel="noopener" href="https://docs.google.com/spreadsheets/d/1zrFsymnqi3fdO26KQRpVVmXeS2QNyOwgPYa9mzbLpHA/edit?gid=413885524#gid=413885524">Business Reports Sheet</a>
+          </div>
           
           
         </section>
